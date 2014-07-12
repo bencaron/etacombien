@@ -9,24 +9,31 @@ if os.environ.get('DEV'):
 else:
   from ds18b20 import DS18B20
 
-
-def read_celcius():
-  sensor = DS18B20()
-  return sensor.get_temperature()
-
-
 def create_app():
   app = Flask(__name__)
   Bootstrap(app)
+
+  sensor = DS18B20()
+
+  def read_celcius():
+    return sensor.get_temperature()
+
+  def read_farenheit():
+    return sensor.get_temperature(DS18B20.DEGREES_F)
 
   @app.route("/temp/celcius")
   def celcius():
     return "%s" % read_celcius()
 
+  @app.route("/temp/farenheit")
+  def farenheit():
+    return "%s" % read_farenheit()
+
   @app.route("/")
   def index():
     celcius = read_celcius()
-    return render_template('index.html', celcius=celcius)
+    farenheit = read_farenheit()
+    return render_template('index.html', celcius=celcius, farenheit=farenheit)
 
   return app
 
