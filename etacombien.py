@@ -2,9 +2,10 @@
 from flask import Flask,render_template
 from flask_bootstrap import Bootstrap
 
-import os
+import platform
 
-if os.environ.get('DEV'):
+if platform.system() == 'Darwin':
+  print "Development mode, faking DS18B20 sensor"
   from fake_DS18B20 import DS18B20
 else:
   from ds18b20 import DS18B20
@@ -15,25 +16,25 @@ def create_app():
 
   sensor = DS18B20()
 
-  def read_celcius():
+  def read_celsius():
     return sensor.get_temperature()
 
-  def read_farenheit():
+  def read_fahrenheit():
     return sensor.get_temperature(DS18B20.DEGREES_F)
 
-  @app.route("/temp/celcius")
-  def celcius():
-    return "%s" % read_celcius()
+  @app.route("/temp/celsius")
+  def celsius():
+    return "%s" % read_celsius()
 
-  @app.route("/temp/farenheit")
-  def farenheit():
-    return "%s" % read_farenheit()
+  @app.route("/temp/fahrenheit")
+  def fahrenheit():
+    return "%s" % read_fahrenheit()
 
   @app.route("/")
   def index():
-    celcius = read_celcius()
-    farenheit = read_farenheit()
-    return render_template('index.html', celcius=celcius, farenheit=farenheit)
+    celsius = read_celsius()
+    fahrenheit = read_fahrenheit()
+    return render_template('index.html', celsius=celsius, fahrenheit=fahrenheit)
 
   return app
 

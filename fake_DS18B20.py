@@ -5,5 +5,5 @@ class DS18B20():
     if celcius == 1:
       return 25.234
     else:
-      return 72.23
+      return 77.23
 
