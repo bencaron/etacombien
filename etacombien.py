@@ -13,7 +13,7 @@ else:
 def create_app():
   app = Flask(__name__)
   Bootstrap(app)
-
+  app.config['BOOTSTRAP_SERVE_LOCAL'] = True
   sensor = DS18B20()
 
   def read_celsius():
