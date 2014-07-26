@@ -23,13 +23,13 @@ if __name__ == '__main__':
       'temp_far': sensor.get_temperature(DS18B20.DEGREES_F)
       }
   url = "http://data.sparkfun.com/input/"+ os.environ['SF_PUBLIC_KEY']
-  print "headers:"
-  print headers
-  print "payload:"
+#  print "headers:"
+#  print headers
+#  print "payload:"
   print payload
-  print "url"
-  print url
+#  print "url"
+#  print url
   r = requests.post(url, data=payload, headers=headers)
-  print "output: "
-  print r
-  print r.text
+#  print "output: "
+#  print r
+#  print r.text
